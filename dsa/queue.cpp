@@ -10,13 +10,13 @@ using namespace std;
 template<typename T>
 class AllocationStrategy {
   public:
-    virtual bool push(T*& arr, int& item_count, int& capacity, T item) = 0;
+    virtual bool enqueue(T*& arr, int& item_count, int& capacity, T item) = 0;
 };
 
 template<typename T>
 class StaticAllocationStrategy : public AllocationStrategy<T> {
   public:
-    bool push(T*& arr, int& item_count, int& capacity, T item) {
+    bool enqueue(T*& arr, int& item_count, int& capacity, T item) {
       if(item_count >= capacity) return false;
 
       arr[item_count] = item;
@@ -28,7 +28,7 @@ class StaticAllocationStrategy : public AllocationStrategy<T> {
 template<typename T>
 class DynamicAllocationStrategy : public AllocationStrategy<T> {
   public:
-    bool push(T*& arr, int& item_count, int& capacity, T item) {
+    bool enqueue(T*& arr, int& item_count, int& capacity, T item) {
       //oczywiscie mozna by uzywac wskaznikow ale my jestesmy koty i piszemy sami
       T* newArr = new T[item_count+1];
 
@@ -47,7 +47,7 @@ class DynamicAllocationStrategy : public AllocationStrategy<T> {
 };
 
 template<typename T>
-class Stack {
+class Queue {
   private:
     T* arr;
     AllocationStrategy<T>* strategy;
@@ -57,12 +57,12 @@ class Stack {
     int item_count = 0;
 
     //if capacity == -1 then its dynamic
-    Stack() {
+    Queue() {
       this->capacity = -1;
       this->strategy = new DynamicAllocationStrategy<T>();
     }
 
-    Stack(int capacity) {
+    Queue(int capacity) {
       this->capacity = capacity;
 
       if(capacity == -1) {
@@ -75,17 +75,22 @@ class Stack {
       }
     }
 
-    bool push(T item) {
-      return strategy->push(this->arr, this->item_count, this->capacity, item);
+    bool enqueue(T item) {
+      return strategy->enqueue(this->arr, this->item_count, this->capacity, item);
     }
 
-    T pop() {
+    T dequeue() {
       if(item_count > 0) this->item_count--;
-      T saved_item = this->arr[this->item_count];
+      T saved_item = this->arr[0];
+
+      for(int i=0; i<item_count; i++) {
+        arr[i] = arr[i+1];
+      }
 
       //for dynamic allocation we decrease the size of array
       if(capacity == -1) {
-        T* newArr = new T[item_count];
+        T* newArr = new T[item_count]; 
+
         for(int i=0; i<item_count; i++) {
           newArr[i] = arr[i];
         }
@@ -98,7 +103,7 @@ class Stack {
     }
 
     T peek() {
-      return this->arr[this->item_count-1];
+      return this->arr[0];
     }
 
     bool is_empty() {
@@ -107,32 +112,32 @@ class Stack {
 };
 
 int main() {
-  Stack<int> stack(-1);
-  int isEmpty = stack.is_empty();
+  Queue<int> queue(-1);
+  int isEmpty = queue.is_empty();
   cout<<"empty: "<<isEmpty<<"\n";
-  int poped = stack.pop();
-  cout<<"poped: "<<poped<<"\n";
+  int dequeued = queue.dequeue();
+  cout<<"dequeued: "<<dequeued<<"\n";
 
-  bool pushed = stack.push(5);
-  cout<<"pushed: "<<pushed<<"\n";
-  bool pushed2 = stack.push(6);
-  cout<<"pushed2: "<<pushed2<<"\n";
-  bool pushed3 = stack.push(1);
-  cout<<"pushed3: "<<pushed3<<"\n";
+  bool queued = queue.enqueue(5);
+  cout<<"queued: "<<queued<<"\n";
+  bool queued2 = queue.enqueue(6);
+  cout<<"queued2: "<<queued2<<"\n";
+  bool queued3 = queue.enqueue(1);
+  cout<<"queued3: "<<queued3<<"\n";
 
-  int pop1 = stack.pop();
-  cout<<"pop1: "<<pop1<<"\n";
-  int pop2 = stack.pop();
-  cout<<"pop2: "<<pop2<<"\n";
-  int pop3 = stack.pop();
-  cout<<"pop3: "<<pop3<<"\n";
+  int dequeue1 = queue.dequeue();
+  cout<<"dequeue1: "<<dequeue1<<"\n";
+  int dequeue2 = queue.dequeue();
+  cout<<"dequeue2: "<<dequeue2<<"\n";
+  int dequeue3 = queue.dequeue();
+  cout<<"dequeue3: "<<dequeue3<<"\n";
 
 
-  Stack<float> stackStatic(2);
-  stackStatic.push(55.5);
-  stackStatic.push(777.21);
-  float popek1 = stackStatic.pop();
-  float popek2 = stackStatic.pop();
-  cout<<"popek1: "<<popek1<<"\n";
-  cout<<"popek2: "<<popek2<<"\n";
+  Queue<float> queueStatic(2);
+  queueStatic.enqueue(55.5);
+  queueStatic.enqueue(777.21);
+  float dequeueek1 = queueStatic.dequeue();
+  float dequeueek2 = queueStatic.dequeue();
+  cout<<"dequeueek1: "<<dequeueek1<<"\n";
+  cout<<"dequeueek2: "<<dequeueek2<<"\n";
 }
