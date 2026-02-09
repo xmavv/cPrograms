@@ -1,8 +1,8 @@
 stack
 queue
+linked list
 
 priority queue(array, heap)
-linked list
 binary tree
 graph
 prefix tree

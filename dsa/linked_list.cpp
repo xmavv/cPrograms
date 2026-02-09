@@ -99,9 +99,13 @@ class Queue {
 
       return ret_value;
     } 
+
+    bool is_empty() {
+      return head == NULL;
+    }
 };
 
-int main() {
+int main2() {
   Stack<int> stack;
   stack.push(1);
   stack.push(2);
@@ -118,15 +122,21 @@ int main() {
 
 
   Queue<int> queue;
+  bool is_empty = queue.is_empty();
+  cout<<is_empty<<"\n";
   queue.enqueue(1);
   queue.enqueue(2);
   queue.enqueue(3);
   queue.enqueue(4);
-
+  is_empty = queue.is_empty();
+  cout<<is_empty<<"\n";
+ 
   int dequeue1 = queue.dequeue();
   int dequeue2 = queue.dequeue();
   int dequeue3 = queue.dequeue();
   int dequeue4 = queue.dequeue();
 
   cout<<"dequeue1: "<<dequeue1<<"\n"<<"dequeue2: "<<dequeue2<<"\n"<<"dequeue3: "<<dequeue3<<"\n"<<"dequeue4: "<<dequeue4<<"\n";
+  
+  return 0;
 }
