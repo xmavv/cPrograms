@@ -20,7 +20,7 @@ struct Node {
 
 template <typename T>
 class BinaryTree {
-  private:
+  protected:
     Node<T>* root;
 
     void preorder(Node<T>* node) {
@@ -31,6 +31,7 @@ class BinaryTree {
       preorder(node->right_child);
     }
 
+  private:
     Node<T>* recursive_deletion(Node<T>* node, T value) {
       if(node == NULL) return NULL;
 
@@ -68,7 +69,7 @@ class BinaryTree {
       root = NULL;
     }
 
-    void insert(T value) {
+    virtual void insert(T value) {
       //add nodes as for balanced tree
       Node<T>* insert_node = new Node<T>();
       insert_node->value = value;
@@ -98,7 +99,7 @@ class BinaryTree {
       }
     }
 
-    void delete_node(T value) {
+    virtual void delete_node(T value) {
       root = recursive_deletion(root, value);
     }
 
@@ -119,6 +120,7 @@ class BinaryTree {
     void traversal_level() {
       //do it with openGL
       Queue<Node<T>*> queue;
+      if(this->root == NULL) return;
       queue.enqueue(this->root);
       cout<<"level order: "<<"\n";
 
@@ -138,7 +140,7 @@ class BinaryTree {
     }
 };
 
-int main (int argc, char *argv[]) {
+int main2 (int argc, char *argv[]) {
   BinaryTree<int> bt;
   bt.insert(1);
   bt.insert(2);
