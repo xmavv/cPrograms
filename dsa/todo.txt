@@ -1,9 +1,19 @@
 stack
 queue
 linked list
-
-priority queue(array, heap)
 binary tree
+
+zadanie zrobic przy wykorzystnianiu naszych dsa
+https://www.youtube.com/watch?v=c6zu897JVQY
+
+binary search tree (rotations)
+
+zrobic opengl albo cos innego wizualizacje grafow i bst
+w heapie zrobic dynamiczne z vectorami bo nigdy w sumie
+z tego nie korzystales
+
+heap
+priority queue(array, heap)
 graph
 prefix tree
 hash table

@@ -4,6 +4,15 @@
 
 using namespace std;
 
+void funkcja(&int xd) {
+  coud<<xd;
+  //pokaze adres
+}
+
+//uzycie jest normalne, po prostu ta funkcja wowczas dziala na adresie nie na kopii tyle nic wiecej filozofii
+int elo = 2;
+funkcja(elo);
+
 struct Node {
   int value;
   Node* next_node;
