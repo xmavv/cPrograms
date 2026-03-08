@@ -207,6 +207,10 @@ class Heap {
       return arr[i];
     }
 
+    vector<T> get_arr() {
+      return arr;
+    }
+
     void set_value(unsigned int i, T value) {
       arr[i] = value;
     }
@@ -346,7 +350,7 @@ class Heap {
     }
 };
 
-int main (int argc, char *argv[]) {
+int mainxd (int argc, char *argv[]) {
   cout<<boolalpha;
   Heap<int> heap(-1, HeapType::MIN);
   bool is_full = heap.is_full();
